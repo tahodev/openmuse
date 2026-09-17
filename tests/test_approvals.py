@@ -2,6 +2,7 @@
 
 from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
+from threading import Barrier
 
 import pytest
 
@@ -23,6 +24,17 @@ def test_expired_approval_is_rejected(monkeypatch):
     token = authority.issue(approval_action(), ttl_seconds=1)
 
     monkeypatch.setattr("openmuse.approvals.time.time", lambda: now + 2)
+
+    assert authority.verify(approval_action(), token) is False
+
+
+def test_approval_expires_at_exact_expiry(monkeypatch):
+    now = 1_000
+    monkeypatch.setattr("openmuse.approvals.time.time", lambda: now)
+    authority = ApprovalAuthority(b"s" * 32)
+    token = authority.issue(approval_action(), ttl_seconds=1)
+
+    monkeypatch.setattr("openmuse.approvals.time.time", lambda: now + 1)
 
     assert authority.verify(approval_action(), token) is False
 
@@ -74,8 +86,15 @@ def test_concurrent_verification_consumes_approval_once():
     action = approval_action()
     token = authority.issue(action)
 
-    with ThreadPoolExecutor(max_workers=8) as pool:
-        results = list(pool.map(lambda _: authority.verify(action, token), range(32)))
+    contenders = 32
+    ready = Barrier(contenders)
+
+    def verify_after_contention(_: int) -> bool:
+        ready.wait()
+        return authority.verify(action, token)
+
+    with ThreadPoolExecutor(max_workers=contenders) as pool:
+        results = list(pool.map(verify_after_contention, range(contenders)))
 
     assert results.count(True) == 1
     assert results.count(False) == 31
