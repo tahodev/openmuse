@@ -1,4 +1,4 @@
-FROM python:3.12-alpine@sha256:9ba6d8cbebf0fb6546ae71f2a1c14f6ffd2fdab83af7e104bdfc69e795f00956
+FROM python:3.12-alpine@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b
 WORKDIR /app
 COPY examples/worker_echo.py /app/worker.py
 USER 65532:65532
