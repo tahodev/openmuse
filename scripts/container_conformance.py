@@ -30,6 +30,6 @@ print(json.dumps(r))"""
     protocol_payload={"message":"conformance","numbers":[2,3]}
     echo=run(a.image,[],json.dumps(protocol_payload))
     protocol=json.loads(echo.stdout) if echo.returncode == 0 else {}
-    if protocol.get("message")!="conformance" or protocol.get("sum")!=5: raise SystemExit("reference worker JSON protocol failed")
+    if protocol.get("message")!="conformance" or protocol.get("sum")!=5: raise SystemExit(f"reference worker JSON protocol failed: returncode={echo.returncode}, stdout={echo.stdout!r}, stderr={echo.stderr!r}")
     print("PASS: non-root, read-only root, writable bounded tmpfs, network denied, JSON protocol")
 if __name__=="__main__": main()
