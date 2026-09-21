@@ -27,7 +27,9 @@ print(json.dumps(r))"""
     observed=json.loads(result.stdout)
     expected={"uid":65532,"root_write":False,"network":False,"tmp_write":True}
     if observed!=expected: raise SystemExit(f"conformance failed: {observed!r}")
-    echo=run(a.image,[],json.dumps({"probe":"echo"}))
-    if echo.returncode or json.loads(echo.stdout)!={"probe":"echo"}: raise SystemExit("reference worker JSON protocol failed")
+    protocol_payload={"message":"conformance","numbers":[2,3]}
+    echo=run(a.image,[],json.dumps(protocol_payload))
+    protocol=json.loads(echo.stdout) if echo.returncode == 0 else {}
+    if protocol.get("message")!="conformance" or protocol.get("sum")!=5: raise SystemExit("reference worker JSON protocol failed")
     print("PASS: non-root, read-only root, writable bounded tmpfs, network denied, JSON protocol")
 if __name__=="__main__": main()
