@@ -1,0 +1,2 @@
+VERIFIED: 3 records form an intact hash chain
+VERIFIED: approved action == executed action (<ACTION_HASH>...)

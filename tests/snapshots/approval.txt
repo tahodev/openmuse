@@ -1,0 +1,10 @@
+1  Agent runs task: read inbox and draft launch plan
+2  PAUSED before sensitive action
+   tool: write_file
+   path: <PATH>
+   content: # Plan /  / - Prepare the Show HN launch
+   action sha256: <ACTION_HASH>...
+3  Host issues a one-time token for this action digest
+4  Action runs; task completes
+5  Audit proof saved: <PATH>
+   Verify it: python examples/verify_audit.py
