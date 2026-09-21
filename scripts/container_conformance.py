@@ -5,7 +5,7 @@ import argparse
 import json
 import subprocess
 
-BASE=["docker","run","--rm","--network=none","--read-only","--cap-drop=ALL","--security-opt=no-new-privileges","--pids-limit=64","--memory=128m","--user=65532:65532","--tmpfs=/tmp:rw,noexec,nosuid,nodev,size=16m"]
+BASE=["docker","run","--rm","--interactive","--network=none","--read-only","--cap-drop=ALL","--security-opt=no-new-privileges","--pids-limit=64","--memory=128m","--user=65532:65532","--tmpfs=/tmp:rw,noexec,nosuid,nodev,size=16m"]
 
 def run(image, command, payload="{}"):
     return subprocess.run([*BASE,image,*command],input=payload,text=True,capture_output=True,timeout=20,check=False)
