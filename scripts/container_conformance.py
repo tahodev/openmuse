@@ -22,7 +22,7 @@ except OSError: r['network']=False
 try: open('/tmp/ok','w').write('x'); r['tmp_write']=True
 except OSError: pass
 print(json.dumps(r))"""
-    result=run(a.image,["python","-c",probe]);
+    result=subprocess.run([*BASE,"--entrypoint","python",a.image,"-c",probe],input="{}",text=True,capture_output=True,timeout=20,check=False);
     if result.returncode: raise SystemExit(result.stderr)
     observed=json.loads(result.stdout)
     expected={"uid":65532,"root_write":False,"network":False,"tmp_write":True}
