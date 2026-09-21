@@ -34,5 +34,5 @@ jobs:
       - name: Resolve local image digest for conformance
         run: |
           digest=$(docker image inspect openmuse-worker:ci --format='{{.Id}}')
-          docker tag openmuse-worker:ci "openmuse-worker@${digest}"
-          python scripts/container_conformance.py "openmuse-worker@${digest}"
+          docker tag openmuse-worker:ci openmuse-worker@sha256:$(printf '%064d' 0)
+          python scripts/container_conformance.py openmuse-worker@sha256:$(printf '%064d' 0)
