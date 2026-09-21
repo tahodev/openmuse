@@ -12,7 +12,7 @@ def run(image, command, payload="{}"):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__); p.add_argument("image",help="digest-pinned reference image"); a=p.parse_args()
-    if "@sha256:" not in a.image: raise SystemExit("image must be pinned by sha256 digest")
+    if "@sha256:" not in a.image and not a.image.startswith("sha256:"): raise SystemExit("image must be pinned by sha256 digest")
     probe="""import json,os,socket
 r={"uid":os.getuid(),"root_write":True,"network":True,"tmp_write":False}
 try: open('/blocked','w').write('x')
