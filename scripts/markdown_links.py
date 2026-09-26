@@ -63,9 +63,7 @@ def _heading_slug(value: str) -> str:
     for char in value.casefold().strip():
         if char.isspace():
             chars.append("-")
-        elif char in "-_":
-            chars.append(char)
-        elif unicodedata.category(char)[0] in {"L", "N"}:
+        elif char in "-_" or unicodedata.category(char)[0] in {"L", "N"}:
             chars.append(char)
     return re.sub(r"-+", "-", "".join(chars)).strip("-")
 
