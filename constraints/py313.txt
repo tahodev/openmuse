@@ -11,7 +11,7 @@ cffi==2.1.1
     # via cryptography
 coverage==7.16.2
     # via pytest-cov
-cryptography==50.0.1
+cryptography==50.0.2
     # via
     #   openmuse-agent (pyproject.toml)
     #   secretstorage
