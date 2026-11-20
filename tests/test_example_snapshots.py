@@ -19,9 +19,12 @@ SNAPSHOTS = Path(__file__).with_name("snapshots")
 EXAMPLES = (
     "e2e_demo",
     "verify_audit",
-    "memory_demo",
+    pytest.param("memory_demo", marks=pytest.mark.skipif(os.name == "nt", reason="memory privacy needs POSIX")),
     "scheduler_demo",
-    "isolated_worker_demo",
+    pytest.param(
+        "isolated_worker_demo",
+        marks=pytest.mark.skipif(sys.platform == "win32", reason="worker resource limits need POSIX"),
+    ),
 )
 
 

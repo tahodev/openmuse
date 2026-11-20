@@ -44,4 +44,5 @@ python -m pytest -q tests/test_example_snapshots.py
 
 The update command does not approve the changed output for you. Do not use it to
 hide a regression. These tests need no live accounts and do not change the runtime
-trust boundary. Worker execution retains the existing POSIX platform requirement.
+trust boundary. Memory and isolated-worker snapshots retain their existing POSIX platform
+requirements and are skipped on native Windows. The other three still run there.
