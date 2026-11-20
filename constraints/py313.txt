@@ -1,5 +1,5 @@
 # Pinned CI dependencies for CPython 3.13; generated 2026-09-28 with uv pip compile pyproject.toml --extra dev --python-version 3.13
-ast-serialize==0.11.2
+ast-serialize==0.12.1
     # via mypy
 attrs==26.1.0
     # via
