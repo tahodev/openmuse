@@ -17,3 +17,32 @@ Every example runs locally. Start with the approval demo, then pick the boundary
 The Google Calendar and Gmail connectors need host-managed OAuth credentials. Their deterministic, credential-free boundary examples live in [`tests/test_google_calendar_connector.py`](../tests/test_google_calendar_connector.py), [`tests/test_google_mail_connector.py`](../tests/test_google_mail_connector.py), and [`tests/test_google_oauth.py`](../tests/test_google_oauth.py). Do not use sensitive production accounts while OpenMuse is alpha.
 
 `approval_app.py` binds to localhost and is a reference demo, not a production approval surface. Production hosts must add TLS, authenticated identity, CSRF protection, and secure cookies.
+
+## Review example output changes
+
+The five credential-free approval, audit verification, memory, scheduler, and
+isolated-worker walkthroughs have whole-output snapshots in `tests/snapshots/`.
+The tests execute the current scripts in fresh temporary directories, then compare
+their output with readable pytest diffs. They mask only the two displayed digest
+prefixes and the worker process ID. Timestamps, temporary paths, and credentials
+are not part of the expected output; unexpected new output is not filtered away.
+
+Run the contracts after installing the development dependencies:
+
+```bash
+python -m pytest -q tests/test_example_snapshots.py
+```
+
+For an intentional wording or output change, regenerate and review every changed
+snapshot before committing it:
+
+```bash
+OPENMUSE_UPDATE_SNAPSHOTS=1 python -m pytest -q tests/test_example_snapshots.py
+git diff -- tests/snapshots/
+python -m pytest -q tests/test_example_snapshots.py
+```
+
+The update command does not approve the changed output for you. Do not use it to
+hide a regression. These tests need no live accounts and do not change the runtime
+trust boundary. Memory and isolated-worker snapshots retain their existing POSIX platform
+requirements and are skipped on native Windows. The other three still run there.

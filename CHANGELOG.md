@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.2a0 (2026-11-20)
+
+- Add whole-output snapshot tests for five credential-free examples, including fresh-process execution and temporary workspaces. Normalize only displayed digest prefixes and worker process IDs.
+- Skip the memory and resource-limited worker examples on native Windows, matching their explicit POSIX-only runtime boundaries.
+- Fetch the current pull-request ref before checking out the synthetic merge commit in WSL CI.
+- Refresh Python 3.12 audit dependency pins for certifi, filelock and msgpack.
+- Direct security reports to private GitHub security advisories.
+
+This is an alpha maintenance release. It does not add native Windows support, broaden runtime permissions, or change the audit format.
+
 ## 0.4.1a0 (2026-10-01)
 
 - Audit hash chain replaced with keyed HMAC-SHA256 chaining; the key lives in the OS credential store (macOS Keychain, Windows Credential Manager, libsecret via `keyring`) and never in the workspace or repository. Forging or editing audit records now requires key access, not just file write.
