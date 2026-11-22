@@ -21,7 +21,7 @@ charset-normalizer==3.5.1
     # via requests
 coverage==7.16.2
     # via pytest-cov
-cryptography==50.0.1
+cryptography==50.0.2
     # via
     #   openmuse-agent (pyproject.toml)
     #   secretstorage
