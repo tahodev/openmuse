@@ -87,7 +87,7 @@ pip-audit==2.10.1
     # via -r /tmp/audit-req.txt
 pip-requirements-parser==32.0.1
     # via pip-audit
-platformdirs==4.12.0
+platformdirs==4.12.3
     # via pip-audit
 pluggy==1.6.0
     # via
